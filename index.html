@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ViÃ±etApp | Creador de historietas escolares</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Creador de historietas escolares</p>
+        <h1>De una hoja con viÃ±etas a una historieta digital lista para presentar.</h1>
+        <p class="hero-text">
+          DescargÃ¡ la plantilla, completala a mano, subÃ­ una foto y transformala en una historieta
+          con portada, globos de diÃ¡logo y exportaciÃ³n final en imagen o PDF.
+        </p>
+        <div class="hero-actions">
+          <button class="primary-btn" type="button" data-jump="workspace">Empezar ahora</button>
+          <button class="ghost-btn" type="button" id="download-current-template">Descargar plantilla</button>
+        </div>
+      </div>
+
+      <aside class="hero-card">
+        <div class="hero-card-head">
+          <span class="dot dot-pink"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-blue"></span>
+        </div>
+        <div class="mini-comic">
+          <div class="mini-cover">
+            <p class="mini-tag">Portada</p>
+            <h2>Mi historieta</h2>
+            <p>Autor: curso 5Â° B</p>
+          </div>
+          <div class="mini-grid">
+            <article>
+              <span class="mini-label">Inicio</span>
+            </article>
+            <article>
+              <span class="mini-bubble">Hola</span>
+            </article>
+            <article></article>
+            <article class="accent"></article>
+          </div>
+        </div>
+      </aside>
+    </header>
+
+    <main class="workspace" id="workspace">
+      <section class="panel settings-panel">
+        <div class="section-title">
+          <p class="eyebrow">Paso 1</p>
+          <h2>Preparar la hoja</h2>
+        </div>
+
+        <label class="field">
+          <span>Plantilla</span>
+          <select id="template-select"></select>
+        </label>
+
+        <label class="field">
+          <span>Recorte</span>
+          <select id="crop-mode">
+            <option value="auto">AutomÃ¡tico</option>
+            <option value="borders">Bordes negros</option>
+            <option value="grid">Grilla manual</option>
+          </select>
+        </label>
+
+        <div class="template-actions">
+          <button class="secondary-btn" type="button" id="download-template-btn">Descargar SVG</button>
+          <button class="secondary-btn" type="button" id="download-template-png-btn">Descargar PNG</button>
+        </div>
+
+        <p class="hint">
+          Consejo: imprimÃ­ la plantilla, dejÃ¡ un pequeÃ±o margen blanco y evitÃ¡ sombras muy fuertes
+          al sacar la foto.
+        </p>
+
+        <div class="section-title compact">
+          <p class="eyebrow">Paso 2</p>
+          <h2>Subir la foto</h2>
+        </div>
+
+        <label class="upload-box" for="worksheet-upload">
+          <input id="worksheet-upload" type="file" accept="image/*">
+          <span class="upload-title">Elegir foto o escaneo</span>
+          <span class="upload-subtitle">JPG, PNG o imagen tomada desde el celular</span>
+        </label>
+
+        <div class="trim-grid">
+          <label class="field">
+            <span>Recorte arriba</span>
+            <input id="trim-top" type="range" min="0" max="20" value="3">
+          </label>
+          <label class="field">
+            <span>Recorte abajo</span>
+            <input id="trim-bottom" type="range" min="0" max="20" value="4">
+          </label>
+          <label class="field">
+            <span>Recorte izquierda</span>
+            <input id="trim-left" type="range" min="0" max="20" value="3">
+          </label>
+          <label class="field">
+            <span>Recorte derecha</span>
+            <input id="trim-right" type="range" min="0" max="20" value="3">
+          </label>
+          <label class="field">
+            <span>Espacio entre viÃ±etas</span>
+            <input id="gutter-size" type="range" min="0" max="8" value="2">
+          </label>
+        </div>
+
+        <button class="primary-btn full-width" type="button" id="process-panels-btn">
+          Recortar viÃ±etas
+        </button>
+        <p class="hint status-text" id="detection-status">
+          La app va a intentar detectar automÃ¡ticamente cada marco negro. Si una foto viene torcida o con poca luz, usarÃ¡ la grilla elegida como respaldo.
+        </p>
+      </section>
+
+      <section class="panel editor-panel">
+        <div class="section-title">
+          <p class="eyebrow">Paso 3</p>
+          <h2>DiseÃ±ar la historieta</h2>
+        </div>
+
+        <div class="editor-grid">
+          <label class="field">
+            <span>TÃ­tulo</span>
+            <input id="comic-title" type="text" value="Mi historieta escolar">
+          </label>
+          <label class="field">
+            <span>Autor</span>
+            <input id="comic-author" type="text" value="Nombre del autor">
+          </label>
+          <label class="field">
+            <span>SubtÃ­tulo</span>
+            <input id="comic-subtitle" type="text" value="Una historia hecha en clase">
+          </label>
+          <label class="field">
+            <span>Portada</span>
+            <select id="cover-style"></select>
+          </label>
+          <label class="field">
+            <span>Formato final</span>
+            <select id="layout-orientation">
+              <option value="vertical">Vertical</option>
+              <option value="horizontal">Horizontal</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Fondo</span>
+            <select id="background-style"></select>
+          </label>
+          <label class="field">
+            <span>Etiqueta</span>
+            <input id="comic-badge" type="text" value="Proyecto escolar">
+          </label>
+          <label class="field">
+            <span>TamaÃ±o de viÃ±etas</span>
+            <select id="panel-size">
+              <option value="medium">Medianas</option>
+              <option value="large">Grandes</option>
+              <option value="compact">Compactas</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Pintado suave</span>
+            <select id="paint-style">
+              <option value="none">Sin color</option>
+              <option value="warm">Durazno</option>
+              <option value="mint">Menta</option>
+              <option value="comic">Pop</option>
+              <option value="lavender">Lavanda</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Intensidad de color</span>
+            <input id="paint-intensity" type="range" min="0" max="100" value="38">
+          </label>
+        </div>
+
+        <div class="section-title compact">
+          <p class="eyebrow">Paso 4</p>
+          <h2>Textos digitales</h2>
+        </div>
+        <div id="panel-editors" class="panel-editors empty-state">
+          ProcesÃ¡ una foto para editar tÃ­tulos y globos de cada viÃ±eta.
+        </div>
+      </section>
+
+      <section class="panel preview-panel">
+        <div class="section-title">
+          <p class="eyebrow">Resultado</p>
+          <h2>Vista previa</h2>
+        </div>
+
+        <div class="preview-actions">
+          <button class="primary-btn" type="button" id="download-comic-btn">Descargar imagen</button>
+          <button class="secondary-btn" type="button" id="print-comic-btn">Guardar en PDF</button>
+        </div>
+
+        <div id="comic-preview" class="comic-preview"></div>
+      </section>
+    </main>
+  </div>
+
+  <template id="panel-editor-template">
+    <article class="panel-editor-card">
+      <div class="panel-editor-head">
+        <h3></h3>
+        <span class="panel-chip"></span>
+      </div>
+      <label class="field">
+        <span>TÃ­tulo de viÃ±eta</span>
+        <input type="text" class="panel-caption-input" placeholder="Ej. Comienza la aventura">
+      </label>
+      <div class="bubble-editor-section">
+        <div class="bubble-editor-header">
+          <span>Globos de diÃ¡logo</span>
+          <button type="button" class="secondary-btn add-bubble-btn">Agregar globo</button>
+        </div>
+        <div class="bubble-editor-list"></div>
+      </div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
